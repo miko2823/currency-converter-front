@@ -55,7 +55,7 @@ function Converter({ logoutCallback }: Props): JSX.Element {
         setSymbols(data.data);
       })
       .catch((error) => alert("API利用を制限中です"));
-  }, []);
+  }, [api]);
 
   const logoutAction = (): void => {
     localStorage.removeItem('token');
