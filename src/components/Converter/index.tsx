@@ -49,13 +49,14 @@ function Converter({ logoutCallback }: Props): JSX.Element {
   }
 
   useEffect(() => {
+    const api = new Api();
     api
       .getAllSymbols()
       .then(({ data }: AxiosResponse<GetAllSymbolsResponse>) => {
         setSymbols(data.data);
       })
       .catch((error) => alert("API利用を制限中です"));
-  }, [api]);
+  }, []);
 
   const logoutAction = (): void => {
     localStorage.removeItem('token');
