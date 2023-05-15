@@ -88,7 +88,7 @@ function Converter({ logoutCallback }: Props): JSX.Element {
     if (!convertResult) {
       return null;
     }
-    const matchItem = convertResult.find((item: Rate) => item.currency == currency_code);
+    const matchItem = convertResult.find((item: Rate) => item.currency === currency_code);
     return matchItem ? matchItem.rate : null;
   }
 
