@@ -4,9 +4,8 @@ on: workflow_dispatch
 
 env:
   AWS_REGION: ap-northeast-1
-  BUCKET_NAME: currency-converter
-  DISTRIBUTION_ID: E1B0LX2X2XW9DY
-  GENERATE_SOURCEMAP: false
+  BUCKET_NAME: currency-converter-201568076829
+  DISTRIBUTION_ID: E37CHEKFL2EQ7J
 
 permissions:
   id-token: write
@@ -22,7 +21,7 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: build project
-        run: npm run build:action
+        run: npm run build
 
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -31,7 +30,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: deploy build file to s3
-        run: aws s3 sync build/ s3://${{ env.BUCKET_NAME }}/v2/ --delete
+        run: aws s3 sync build/ s3://${{ env.BUCKET_NAME }} --delete
 
       - name: delete cloudfront cache
         run: aws cloudfront create-invalidation --distribution-id ${{ env.DISTRIBUTION_ID }} --paths "/*"
