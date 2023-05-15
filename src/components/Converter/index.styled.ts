@@ -20,7 +20,7 @@ export const StyledConverter = styled(Box)`
   }
 
   .MuiList-root {
-    background-color: #ffe6c7;
+    background-color: white;
   }
 
   .MuiBox-root {

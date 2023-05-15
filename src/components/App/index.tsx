@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LogoDevIcon from '@mui/icons-material/LogoDev';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import { StyledApp } from './index.styled';
 import { Login } from '../Login';
 import { Converter } from '../Converter';
@@ -11,7 +11,7 @@ function App() {
   return (
     <StyledApp>
       <Tooltip title="Currenct Converter" placement="right">
-        <LogoDevIcon className="logo" />
+        <CurrencyExchangeIcon className="logo" />
       </Tooltip>
       {token ? (
         <Converter logoutCallback={() => setIsToken(null)} />

@@ -3,11 +3,12 @@ import { StyledConverter } from './index.styled';
 import { Api, GetAllSymbolsResponse, SymbolResponse, ConvertResponse, Rate } from '../../api';
 import { Button, List, ListItem, ListItemText, Tooltip,
   Typography, FormControl, TextField, InputLabel, MenuItem,
-  Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+  Dialog, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { AxiosResponse } from 'axios';
 import LogoutIcon from '@mui/icons-material/Logout';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 type Props = {
@@ -73,8 +74,11 @@ function Converter({ logoutCallback }: Props): JSX.Element {
     setMyCurrencyList(myCurrencyList => [...myCurrencyList, currency])
   };
 
+  const deleteCurrencyFromMyCurrencyList = (currency: string) => {
+    setMyCurrencyList((myCurrencyList.filter(item => item !== currency)))
+  };
+
   const handleConvertCurrenct = () => {
-    console.log("handleConvertCurrenct");
     convert();
     handleClose();
     setSelectedAmount(0);
@@ -90,7 +94,7 @@ function Converter({ logoutCallback }: Props): JSX.Element {
 
   return (
     <StyledConverter>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} fullWidth={true}>
         <DialogTitle>Enter the Amount</DialogTitle>
         <DialogContent>
           <TextField
@@ -134,7 +138,17 @@ function Converter({ logoutCallback }: Props): JSX.Element {
         <List>
           {myCurrencyList.map((currency_code: string) => {
             return (
-              <ListItem key={currency_code}>
+              <ListItem
+                key={currency_code}
+                secondaryAction={
+                  <IconButton
+                     edge="end"
+                     aria-label="delete"
+                     onClick={() => deleteCurrencyFromMyCurrencyList(currency_code)}>
+                    <DeleteIcon />
+                  </IconButton>
+                }
+                >
                 <ListItemText>{currency_code}</ListItemText>
                 <TextField
                   key={currency_code}

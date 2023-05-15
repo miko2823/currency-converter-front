@@ -1,0 +1,37 @@
+name: deploy
+
+on: workflow_dispatch
+
+env:
+  AWS_REGION: ap-northeast-1
+  BUCKET_NAME: currency-converter
+  DISTRIBUTION_ID: E1B0LX2X2XW9DY
+  GENERATE_SOURCEMAP: false
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: build project
+        run: npm run build:action
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: deploy build file to s3
+        run: aws s3 sync build/ s3://${{ env.BUCKET_NAME }}/v2/ --delete
+
+      - name: delete cloudfront cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ env.DISTRIBUTION_ID }} --paths "/*"
