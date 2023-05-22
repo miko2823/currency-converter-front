@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:6001/',
+  baseURL: 'http://currency-converter-519158361.ap-northeast-1.elb.amazonaws.com/',
   headers: {
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
